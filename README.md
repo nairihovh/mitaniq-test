@@ -2,6 +2,7 @@
 
 
 Project Structure:
+```
 mitaniq/
 ├── README.md
 ├── app.js
@@ -38,13 +39,18 @@ mitaniq/
     ├── login_register.ejs
     ├── search.ejs
     └── settings.ejs
-
+```
 
 TO INSTALL ALL PREREQUISITES
 
-run - npm install
+```
+npm install
+```
 
 START PROJECT
 
-run - npm start
+```
+npm start
+```
+
 it is starting server on localhost on 3000 port
