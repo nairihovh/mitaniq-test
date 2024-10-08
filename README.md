@@ -25,9 +25,6 @@ mitaniq/
 ├── app.js
 ├── keys/ 
 │   ├── certificate.pem
-│   ├── client_certificate.p12
-│   ├── csr.csr
-│   ├── pass
 │   └── private_key.pem
 ├── metaxHelpers.js
 ├── package.json
