@@ -1,0 +1,52 @@
+<%- include('base', { title: "Կարգաւորումնէր", body: `` }) %>
+<div class="welcom" style="width: 80% !important;">
+    <h2>User Settings</h2><br>
+    <form id="settingsForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="profilePicture">Profile Picture:</label>
+            <div class="profile-preview">
+                <img id="profilePreview" src="https://realschool.am:443/db/get?id=<%= user.photo %>" alt="Profile Picture">
+            </div>
+            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" onchange="previewProfilePicture(event)">
+        </div>
+        <div class="form-group">
+            <label for="coverPicture">Cover Picture:</label>
+            <input type="file" id="coverPicture" name="coverPicture" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" disabled value="<%= user.username %>" required>
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name"  value="<%= user.first_name %>" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" value="<%= user.last_name %>" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email"  value="<%= user.email %>" required>
+        </div>
+        <!-- <div class="form-group">
+            <label for="interests">Interests:</label>
+            <input type="text" id="interests" name="interests" placeholder="Enter your interests" data-interests='<%= JSON.stringify(user.interests) %>' required>
+        </div> -->
+        
+        <button type="submit">Save Changes</button>
+    </form>
+    <script>
+        // const interests = [<%= user.interests %>];
+        var container = $("#interests")
+        var interests = JSON.parse(container.attr('data-interests'));
+
+        var interests_field = ""
+        interests.forEach(async(interest) => {
+            var name = await fetchFromUUID(interest, "name")
+            interests_field += name.hye_AM + ", "
+            // var val = $("#interests").val()
+            $("#interests").val(interests_field)
+        });
+    </script>
+</div>

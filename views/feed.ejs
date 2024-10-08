@@ -1,0 +1,57 @@
+<%- include('base', { title: "Նորութիւններ", body: `` }) %>
+<div id="feed">
+	<div class="posts-navigation">
+		<a href="#">տեսնել բոլորը</a>
+		<a href="#">տեսնել ընկերների հրապարակումները</a>
+	</div>
+	<main>
+		<% publications.reverse().forEach(post => { %>
+			<article>
+				<div class="user">
+					<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+					<span><%= user.username %></span>
+				</div>
+				<div class="text-content">
+					<h2>
+						<%= post.name %>
+					</h2>
+				</div>
+				<div class="text-content">
+					<%= post.content.slice(0, 200) %>...
+				</div>
+				<div class="image-content" id="image-content-<%= post.id %>" data-photos='<%= JSON.stringify(post.photos) %>' data-videos='<%= JSON.stringify(post.videos) %>'>
+					<!-- Images will be inserted dynamically via jQuery -->
+				</div>
+				<div class="buttons">
+					<img src="img/like.svg">
+					<img src="img/comment.svg">
+					<img src="img/send.svg">
+				</div>
+			</article>
+		<% }) %>
+		<script>
+			$(document).ready(function() {
+				$('[id^=image-content-]').each(function() {
+					var container = $(this);  // Reference to the current container
+					var photos = JSON.parse(container.attr('data-photos'));  // Get the photos array
+					photos.forEach(async function(photo) {
+						var uuid = await fetchFromUUID(photo, "photo")
+						var imgSrc = `https://realschool.am:443/db/get?id=${uuid}`;
+						var imgElement = `<img src="${imgSrc}" alt="Photo" />`;
+						container.append(imgElement);
+					});
+					var videos = JSON.parse(container.attr('data-videos')); 
+					videos.forEach(async function(video) {
+						console.log(video)
+						var uuid = await fetchFromUUID(video, "video")
+						console.log(uuid)
+						var url = `https://realschool.am:443/db/get?id=${uuid}`;
+						var imgElement = `<video src="${url}" alt="Video" controls muted />`;
+						container.append(imgElement);
+					});
+				});
+			});
+		</script>
+	</main>
+</div>
+<!-- <script src="./js/scripts.js"></script> -->

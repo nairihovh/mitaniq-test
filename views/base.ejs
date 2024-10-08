@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %></title>
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img src="img/mitaniq.svg">
+			<h1>ՄիՏանիք 2</h1>
+		</div>
+		<div class="search">
+			<input type="search" name="search" placeholder="Որոնում..." />
+		</div>
+		<div class="menu">
+			<img src="img/save.svg">
+			<img src="img/notifications.svg">
+			<img src="img/messager.svg">
+			<img src="img/friends.svg">
+		</div>
+	</header>
+	<nav>
+		<div class="account">
+			<img src="https://realschool.am:443/db/get?id=<%= user.photo %>">
+			<span><%= user.username %></span>
+		</div>
+		<ul class="menu">
+			<li>
+				<img src="img/home.svg">
+				<span><a href="/">Գլխաւոր</a></span>
+			</li>
+			<li>
+				<img src="img/new-post.svg">
+				<!-- <a href="#new-post"><span>Նոր Հրապարակում</span></a> -->
+				<span class="create-new-post">Ստեղծել</span>
+			</li>
+			<li>
+				<img src="img/events.svg">
+				<span>Միջոցառումնէր</span>
+			</li>
+			<li>
+				<img src="img/settings.svg">
+				<span><a href="/settings">Կարգաւորումնէր</a></span>
+			</li>
+			<li>
+				<img src="img/settings.svg">
+				<span><a href="/logout">Ելք</a></span>
+			</li>
+		</ul>
+	</nav>
+    <%- body %>
+    <footer>
+		<input type="search" name="search-chat" placeholder="Search Messages..." />
+		<ul class="messages">
+			<li>
+				<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+				<div>
+					<h1>աւգտանուն</h1>
+					<span>վերջին նամակ</span>
+				</div>
+			</li>
+			<li>
+				<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+				<div>
+					<h1>աւգտանուն</h1>
+					<span>վերջին նամակ</span>
+				</div>
+			</li>
+			<li>
+				<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+				<div>
+					<h1>աւգտանուն</h1>
+					<span>վերջին նամակ</span>
+				</div>
+			</li>
+			<li>
+				<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+				<div>
+					<h1>աւգտանուն</h1>
+					<span>վերջին նամակ</span>
+				</div>
+			</li>
+		</ul>
+        <div id="newPostPopup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <h2>Ստեղծել նոր յայտարարութիւն</h2>
+                <form id="createPostForm" enctype="multipart/form-data"></form>
+                    <div id="newPostForm">
+                        <label for="postTitle">Վերնագիր</label>
+                        <input type="text" id="postTitle" placeholder="Մուտքագրէք յայտարարութեան վերնագիրը" required>
+						
+                        <label for="postContent">Բովանդակութիւն</label>
+                        <textarea id="postContent" placeholder="Գրէք բովանդակութիւնը..." style="height: 200px;" required></textarea>
+						
+                        <label for="access">Հասանելիություն</label>
+						<select name="access" id="access">
+							<option value="0">Գաղտնի</option>
+							<option value="1" selected>Հանրային</option>
+						</select>
+                        <!-- <input type="checkbox" id="access" placeholder="test"> -->
+                        
+						<label for="postMedia">Կցել պատկեր/տեսանիւթ</label>
+                        <input type="file" id="postMedia" accept="image/*,video/*" multiple>
+                        <span id="message"></span>
+                        <div id="mediaPreview"></div>
+
+						<div class="hashtag-input-wrapper">
+							<div class="custom-select-container">
+								<select id="hashtagSelect" class="custom-select" data-interests='<%= JSON.stringify(interests) %>'>
+									<option value="" disabled selected>Ընտրել հեշթեգ</option>
+									<!-- Add more options as necessary -->
+								</select>
+							</div>
+							<button type="button" id="addHashtagBtn" style="padding: 5px;
+								background-color: rgb(162, 205, 145);
+								border: none;
+								border-radius: 4px;
+								color: #ffffff;
+								font-size: 16px;
+								cursor: pointer;">
+								Ավելացնել
+							</button>
+						</div>
+						<div id="selectedHashtags">
+							<h4>Ընտրված հեշթեգներ:</h4>
+							<ul id="hashtagList"></ul>
+						</div>
+        
+                        <button type="submit" id="create-post">Ստեղծել յայտարարութիւն</button>
+                    </div>
+                <form id="createPostForm" enctype="multipart/form-data"></form>
+            </div>
+        </div>
+	</footer>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/scripts.js"></script>
+	<script>
+		$(document).ready(function () {
+			// Add event listener to the "Add Hashtag" button
+			$('#addHashtagBtn').on('click', function () {
+				var selectedHashtag = $('#hashtagSelect').val(); // Get selected hashtag
+				if (selectedHashtag) {
+				// Check if the hashtag is already added
+				if ($("#hashtagList li[data-hashtag='" + selectedHashtag + "']").length === 0) {
+					// Create a new list item for the selected hashtag
+					var hashtagItem = `
+						<li data-hashtag="${selectedHashtag}">
+							#${selectedHashtag} 
+							<span class="remove-hashtag">&times;</span>
+						</li>
+					`;
+
+					// Append the new hashtag to the list
+					$('#hashtagList').append(hashtagItem);
+				} else {
+					alert('Հեշթեգն արդեն ավելացված է։');
+				}
+			}
+		});
+
+		var container = $("#hashtagSelect")
+		var hashtags = JSON.parse(container.attr('data-interests'));
+		hashtags.forEach(async (tag) => {
+			var name = await fetchFromUUID(tag, "name")
+			name = name.hye_AM
+			var option = `<option value="${name}">#${name}</option>`;
+			container.append(option);
+		});
+
+
+		// Remove hashtag on clicking the remove button
+		$('#hashtagList').on('click', '.remove-hashtag', function () {
+			$(this).parent().remove(); // Remove the parent <li> element
+		});
+	});
+	</script>
+</body>
+</html>

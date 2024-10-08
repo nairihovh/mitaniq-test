@@ -1,0 +1,60 @@
+<!DOXTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitaniq 2</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="welcom">
+        <div class="prew">
+            <img src="./img/mitaniq.svg">
+            <h1>Մուտք ՄիՏանիք 2</h1>
+            <span id="welcom_prew">Մուտքագրեք ձեր աւգտանունը եւ գաղտնաբառը</span>
+        </div>
+        <div class="form" id="login_form">
+            <label>
+                <span>Աւգտանուն</span>
+                <input type="text" name="username" required>
+            </label>
+            <label>
+                <span>Գաղտնաբառ</span>
+                <input type="password" name="password" required>
+            </label>
+            <span class="err_message"></span>
+            <span class="success" id="success"></span>
+            <button type="submit" id="login">ՄՈՒՏՔ</button>
+            <div>
+                <span>Մոռացել եմ գաղտնաբառը</span>
+                <span id="switch_to_register" active>Գրանցուել հիմա</span>
+            </div>
+        </div>
+        <div class="form" id="register_form">
+            <label>
+                <span>Աւգտանուն</span>
+                <input type="text" name="username" id="reg_username" required>
+            </label>
+            <label>
+                <span>Եղ. հասցե</span>
+                <input type="email" name="email" id="reg_email" required>
+            </label>
+            <label>
+                <span>Ստեղծեք գաղտնաբառ</span>
+                <input type="password" name="password" id="reg_password" required>
+            </label>
+            <label>
+                <span>Կրկնեք գաղտնաբառը</span>
+                <input type="password" name="repeat_password" id="repeat_password" required>
+            </label>
+            <span class="err_message"></span>
+            <button type="submit" id="register">ԳՐԱՆՑՈՒԵԼ</button>
+            <div>
+                <span>Մոռացել եմ գաղտնաբառը</span>
+                <span id="switch_to_login" active>Մուտք գործել</span>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/scripts.js" type="module"></script>
+</body>

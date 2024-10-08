@@ -1,0 +1,62 @@
+<div class="posts-navigation">
+    <a href="#">Գտնուած աւգտատէրեր</a>
+</div>
+<main>
+<% users.forEach(finded_user => { %>
+    <article>
+        <div class="user">
+            <img src="https://realschool.am:443/db/get?id=<%= user.photo %>">
+            <span><%= finded_user.username %></span>
+        </div>
+        <div class="buttons">
+            <button style="width: 100%;
+            background: var(--system-active-color);
+            height: 7vh;
+            border: none;
+            border-radius: 1.2vh;
+            margin-top: 5%;
+            color: var(--system-color);
+            font-size: 2.5vh;
+            font-weight: 900;
+            cursor: pointer;
+            opacity: 1;
+            transition: 0.5s;" class="<% if (!(user.sent_friend_requests.includes(finded_user.uuid))) { %> 
+                send_friend_request
+            <% } else { %>
+                cancel_friend_request
+            <% } %>" data-uuid="<%= finded_user.uuid %>">
+            <% if (!(user.sent_friend_requests.includes(finded_user.uuid))) { %> 
+                Ուղարկել ընկերութեան յայտ
+            <% } else { %>
+                Չեղարկել ընկերութեան յայտը
+            <% } %>
+            </button>
+            <button style="width: 100%;
+            background: rgb(143, 143, 140);
+            height: 7vh;
+            border: none;
+            border-radius: 1.2vh;
+            margin-top: 5%;
+            color: var(--system-color);
+            font-size: 2.5vh;
+            font-weight: 900;
+            cursor: pointer;
+            opacity: 1;
+            transition: 0.5s;" disabled>Ուղարկել նամակ</button>
+        </div>
+    </article>
+    <script>
+        $(".send_friend_request").on("click", (event) => {
+            var button = $(event.currentTarget);
+            var uuid = button.attr("data-uuid");
+            sendFriendRequest(uuid);
+        });
+        $(".cancel_friend_request").on("click", (event) => {
+            var button = $(event.currentTarget);
+            var uuid = button.attr("data-uuid");
+            cancelFriendRequest(uuid);
+            console.log($("#feed").html())
+            
+        });
+    </script>
+<% }) %>
