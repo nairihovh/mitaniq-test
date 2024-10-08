@@ -2,11 +2,16 @@
 
 
 Project Structure:
+
+
+```
+NEED TO CREATE keys FOLDER AND ADD PRIVATE_KEY AND CERTIFICATE
+```
 ```
 mitaniq/
 ├── README.md
 ├── app.js
-├── keys/ --- NEED TO CREATE THIS FOLDER AND ADD PRIVATE_KEY AND CERTIFICATE
+├── keys/ 
 │   ├── certificate.pem
 │   ├── client_certificate.p12
 │   ├── csr.csr
